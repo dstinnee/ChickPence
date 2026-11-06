@@ -32,7 +32,7 @@ const sale = {
 const batchData = { batch, feed: [], mortality: [{ mortality_id: 'm1', batch_id: 'b1', entry_date: '2026-10-02', count: 90 }], sales: [sale], allocations: [] };
 
 const noMarkupFromData = (html) => {
-  expect(html).not.toContain('<img');
+  expect(html).not.toContain('<img src=x');
   expect(html).not.toMatch(/onerror="alert/);
 };
 
@@ -60,7 +60,7 @@ describe('names from records are escaped', () => {
 
   it('History: batch names and the search text', () => {
     const html = renderHistory([batchData], '"><img src=x>', 'All');
-    expect(html).not.toContain('<img');
+    expect(html).not.toContain('<img src=x');
     expect(html).toContain('value="&quot;&gt;&lt;img src=x&gt;"');
   });
 

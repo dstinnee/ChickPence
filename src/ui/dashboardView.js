@@ -1,3 +1,5 @@
+import { buildPnlLedger } from '../services/pnlCalendar.js';
+import { renderPnlCalendar, attachPnlCalendar } from './pnlCalendarView.js';
 import {
   calcTotalRevenue,
   calcDashboardAverages,
@@ -71,7 +73,7 @@ export function getDashboardChartData(closedBatchesWithData = []) {
   return { enrichedClosed, last5, avgNetProfit, avgSellingPricePerKg, allClosedSorted };
 }
 
-export function renderDashboard(openBatchesData, closedBatchesWithData, collapsedBatchIds = new Set(), insights = null) {
+export function renderDashboard(openBatchesData, closedBatchesWithData, collapsedBatchIds = new Set(), insights = null, expenses = []) {
   const { last5, avgNetProfit, avgSellingPricePerKg, allClosedSorted } =
     getDashboardChartData(closedBatchesWithData);
   const today = localToday();
@@ -154,52 +156,35 @@ export function renderDashboard(openBatchesData, closedBatchesWithData, collapse
 
   const emptyChartMsg = `<div class="text-mut" style="padding: 24px; text-align: center;">No closed batches yet.</div>`;
 
+  const closedProfit = allClosedSorted.reduce((sum, item) => sum + item.netProfit, 0);
+  const closedRevenue = allClosedSorted.reduce((sum, item) => sum + calcTotalRevenue(item.sales), 0);
+  const closedCost = closedRevenue - closedProfit;
+  const heads = openBatchesData.reduce((sum,item) => sum + liveHeadCount(item.batch,item.mortality,item.sales,today),0);
+  const ledger = buildPnlLedger([...openBatchesData, ...closedBatchesWithData], expenses);
   return `
-    <div class="top-bar">
-      <h1>Dashboard</h1>
-
-    </div>
-
-    <div class="dash-warnings-panel dash-animate ${hasActiveWarning ? 'has-alert' : ''}" style="--dash-delay:0s;">
-      <div class="flex-row">
-        <h2>${hasActiveWarning ? '⚠ Open Batch Warnings' : 'Open Batch Warnings'}</h2>
+    <section class="flock-dashboard" aria-label="Farm dashboard">
+      <header class="flock-header"><div><h1>A good day to grow.</h1><p>Here’s how your flock is doing.</p></div><div class="flock-header-actions"><span>${formatDate(today,true)}</span><button type="button" class="flock-primary" data-action="go-batches">Manage batches <span aria-hidden="true">↗</span></button></div></header>
+      <div class="flock-top-grid">
+        <section class="flock-overview"><div class="flock-overview-heading"><h2>A little care.<br>A healthier bottom line.</h2><span class="flock-period">${closedBatchesWithData.length} closed batches · all time</span></div>
+          <div class="flock-eggs" aria-label="Closed batch financial performance">
+            <div class="flock-egg egg-sales"><span>Sales</span><strong>${formatPeso(closedRevenue)}</strong></div>
+            <div class="flock-egg egg-cost"><span>Costs</span><strong>${formatPeso(closedCost)}</strong></div>
+            <div class="flock-egg egg-profit"><span>Net profit</span><strong>${formatPeso(closedProfit)}</strong></div>
+          </div>
+          <div class="flock-overview-bottom"><span><i></i>Every batch tells a story.</span><img class="flock-mascot" src="/images/chicken-mascot.png" alt="ChickPence’s waving chicken mascot" width="90" height="90" /></div>
+        </section>
+        <section id="pnl-calendar-host" class="pnl-calendar-host" aria-label="Profit and loss calendar"><div class="pnl-calendar-body">${renderPnlCalendar(ledger)}</div><div class="pnl-preview" id="pnl-preview" role="tooltip" hidden></div></section>
       </div>
-      <div class="dash-warning-list">
-        ${warningsHtml}
-      </div>
-    </div>
-
-    <div class="dash-section-label" style="margin-top:4px;">Performance</div>
-    <div class="card-box dash-chart-card dash-animate" style="--dash-delay:.03s;">
-      <div class="dash-chart-head">
-        <h2>Net Profit Trend</h2>
-        <span class="text-mut">All closed batches over time</span>
-      </div>
-      ${allClosedSorted.length ? `<div class="chart-canvas-wrap"><canvas id="dash-line-chart"></canvas></div>` : emptyChartMsg}
-      <div class="stat-mini-row">
-        <div class="stat-tile-mini">
-          <span class="stat-mini-label">Avg Net Profit</span>
-          <b class="stat-mini-value">${formatPeso(avgNetProfit)}</b>
+      <div class="flock-bottom-grid">
+        <div class="flock-performance-column">
+          <section class="flock-livestock"><div><h2>In the coop</h2><p>${openBatchesData.length} open ${openBatchesData.length===1?'batch':'batches'}</p></div><strong>${heads.toLocaleString()}<span>live birds</span></strong><div class="coop-eggs" aria-hidden="true"><i></i><i></i><i></i></div></section>
+          <section class="card-box dash-chart-card flock-trend"><div class="dash-chart-head"><h2>Profit over time</h2><span class="text-mut">Closed batches</span></div>${allClosedSorted.length ? '<div class="chart-canvas-wrap"><canvas id="dash-line-chart" aria-label="Net profit by closed batch" role="img"></canvas></div>' : emptyChartMsg}<div class="stat-mini-row"><div class="stat-tile-mini"><span class="stat-mini-label">Avg net profit · last 5</span><b class="stat-mini-value">${formatPeso(avgNetProfit)}</b></div><div class="stat-tile-mini"><span class="stat-mini-label">Avg price / kg · last 5</span><b class="stat-mini-value">${formatPeso(avgSellingPricePerKg)}</b></div></div></section>
         </div>
-        <div class="stat-tile-mini">
-          <span class="stat-mini-label">Avg Price / KG</span>
-          <b class="stat-mini-value">${formatPeso(avgSellingPricePerKg)}</b>
-        </div>
+        <section class="flock-batches-panel"><div class="flock-panel-heading"><h2>Your growing flocks</h2>${openBatchesData.length>1?`<button class="btn-link" id="btn-toggle-all-dash-batches">${allCollapsed?'Expand all':'Collapse all'}</button>`:''}</div><p class="flock-panel-caption">A daily check-in for your open batches.</p>${openCardsHtml}<button class="flock-view-all" data-action="go-batches">View all batches <span aria-hidden="true">↗</span></button></section>
       </div>
-    </div>
-
-    ${insights ? `<div class="dash-animate" style="--dash-delay:.05s;">${renderInsightsCard(insights)}</div>` : ''}
-
-    <div class="flex-row" style="margin:4px 0 6px;align-items:center;">
-      <div class="dash-section-label">Open Batches</div>
-      ${openBatchesData.length > 1 ? `
-        <button class="btn-link" id="btn-toggle-all-dash-batches" style="font-size:11px;font-weight:600;text-transform:uppercase;">
-          ${allCollapsed ? '+ Maximize All' : '− Minimize All'}
-        </button>
-      ` : ''}
-    </div>
-    ${openCardsHtml}
-  `;
+      <section class="flock-health"><div class="flock-panel-heading"><h2>Flock health</h2><span class="flock-health-state ${hasActiveWarning?'needs-care':''}">${hasActiveWarning?'Needs attention':'Looking healthy'}</span></div><div class="dash-warning-list">${warningsHtml}</div></section>
+      ${insights ? `<div class="flock-insights">${renderInsightsCard(insights)}</div>` : ''}
+    </section>`;
 }
 
 async function renderDashboardCharts(container, closedBatchesWithData, onNavigate) {
@@ -259,7 +244,7 @@ async function renderDashboardCharts(container, closedBatchesWithData, onNavigat
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: { duration: 900, easing: 'easeOutQuart' },
+        animation: { duration: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 700, easing: 'easeOutQuart' },
         plugins: {
           legend: { display: false },
           tooltip: { callbacks: { label: (ctx) => formatPeso(ctx.raw) } }
@@ -289,8 +274,10 @@ export function attachDashboardListeners(
   onReload,
   collapsedBatchIds = new Set(),
   openBatchesData = [],
-  closedBatchesData = []
+  closedBatchesData = [],
+  expenses = []
 ) {
+  attachPnlCalendar(container, [...openBatchesData, ...closedBatchesData], expenses, onNavigate);
   container.querySelectorAll('[data-action="go-batches"]').forEach((btn) => {
     btn.addEventListener('click', () => onNavigate('batches'));
   });
@@ -323,7 +310,7 @@ export function attachDashboardListeners(
       const allToggleBtn = container.querySelector('#btn-toggle-all-dash-batches');
       if (allToggleBtn && openBatchesData.length > 0) {
         const allCollapsed = openBatchesData.every((d) => collapsedBatchIds.has(d.batch.batch_id));
-        allToggleBtn.textContent = allCollapsed ? '+ Maximize All' : '− Minimize All';
+        allToggleBtn.textContent = allCollapsed ? 'Expand all' : 'Collapse all';
       }
     });
   });

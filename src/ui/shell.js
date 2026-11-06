@@ -14,32 +14,22 @@ export function renderSyncStatus(syncStatus = {}) {
 export function renderShell(activeView, contentHtml, syncStatus, onNavigate, onLogout, onReload) {
   const syncHtml = renderSyncStatus(syncStatus);
 
-  const navItem = (key, label) => `
-    <button class="nav-link ${activeView === key ? 'active' : ''}" data-nav="${key}">
-      ${label}
-    </button>
-  `;
+  const glyph = (path) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+  const icons = {
+    dashboard: glyph('<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>'),
+    batches: glyph('<path d="M12 3C8 3 5 11 5 15a7 7 0 0 0 14 0c0-4-3-12-7-12Z"/><path d="m5 13 4 2 3-3 3 3 4-2"/>'),
+    history: glyph('<path d="M3 11a9 9 0 1 1 2.4 7M3 4v7h7m2-4v5l3 2"/>'),
+    logout: glyph('<path d="M9 4H4v16h5m0-8h12m-4-4 4 4-4 4"/>')
+  };
+  const navItem = (key, label) => `<button type="button" class="nav-link ${activeView === key || (key==='history' && activeView==='summary') ? 'active' : ''}" data-nav="${key}" ${activeView===key?'aria-current="page"':''}>${icons[key]}<span>${label}</span></button>`;
 
   return `
-    <div class="app-container">
-      <aside class="sidebar">
-        <div class="logo-brand cursor-pointer" data-nav="dashboard">
-          <span style="font-size: 22px;">🐥</span>
-          <span>ChickPence</span>
-        </div>
-
-        ${navItem('dashboard', 'Dashboard')}
-        ${navItem('batches', 'Open Batches')}
-        ${navItem('history', 'History')}
-
-        <button class="nav-link" id="btn-shell-logout">
-          Logout
-        </button>
-
-        <button type="button" class="sync-status-box sync-status" id="sidebar-sync-box" title="Sync: what is waiting to upload, and changes the server refused">
-          <span id="sync-indicator-text">${syncHtml}</span>
-        </button>
-
+    <div class="app-container flock-app">
+      <aside class="sidebar flock-sidebar" aria-label="Main navigation">
+        <button type="button" class="flock-brand" data-nav="dashboard" aria-label="ChickPence dashboard"><img src="/images/chicken-mascot.png" alt="" width="42" height="42"/><span>ChickPence</span></button>
+        <nav class="flock-nav">${navItem('dashboard','Overview')}${navItem('batches','Batches')}${navItem('history','History')}</nav>
+        <div class="flock-rail-bottom"><button type="button" class="nav-link" id="btn-shell-logout">${icons.logout}<span>Log out</span></button>
+        <button type="button" class="sync-status-box sync-status" id="sidebar-sync-box" title="Sync: waiting uploads and server problems"><span id="sync-indicator-text">${syncHtml}</span></button></div>
       </aside>
 
       <main class="main-content">

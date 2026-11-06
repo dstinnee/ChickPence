@@ -197,18 +197,19 @@ async function render() {
   let contentHtml = '';
 
   if (state.view === 'dashboard') {
-    const [openBatchesData, closedBatchesData] = await Promise.all([
+    const [openBatchesData, closedBatchesData, calendarExpenses] = await Promise.all([
       loadOpenBatchesData(),
-      Repository.getClosedBatchesWithData()
+      Repository.getClosedBatchesWithData(),
+      Repository.getAllExpenses()
     ]);
 
     const card = await loadInsightsCard('dashboard', buildDashboardFacts(openBatchesData, closedBatchesData, localToday()));
     if (!isLatest()) return;
     state.insights = card && { scope: card.scope, facts: card.facts };
-    contentHtml = renderDashboard(openBatchesData, closedBatchesData, state.collapsedBatchIds, card?.insights ?? null);
+    contentHtml = renderDashboard(openBatchesData, closedBatchesData, state.collapsedBatchIds, card?.insights ?? null, calendarExpenses);
     appContainer.innerHTML = renderShell(state.view, contentHtml, state.syncStatus, navigate, handleLogout, render);
     attachShellListeners(appContainer, navigate, handleLogout, render, openSync);
-    attachDashboardListeners(appContainer, navigate, render, state.collapsedBatchIds, openBatchesData, closedBatchesData);
+    attachDashboardListeners(appContainer, navigate, render, state.collapsedBatchIds, openBatchesData, closedBatchesData, calendarExpenses);
     attachInsightsCard(appContainer, () => refreshInsightsCard({ force: true }));
 
   } else if (state.view === 'batches') {

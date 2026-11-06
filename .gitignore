@@ -4,3 +4,6 @@ dist
 *.local
 .env
 !.env.example
+
+# Local visual verification captures
+.impeccable/review/
