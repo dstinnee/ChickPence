@@ -1,407 +1,417 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-06T22:30:01.653843+00:00",
+  "generatedAt": "2026-11-09T04:40:20.252464+00:00",
   "title": "Design System: ChickPence",
   "extensions": {
     "colorMeta": {
       "bg": {
         "role": "neutral",
-        "displayName": "Bg",
+        "displayName": "Farm cream",
         "tonalRamp": [
-          "hsl(60.0 15.8% 15%)",
-          "hsl(60.0 15.8% 26%)",
-          "hsl(60.0 15.8% 38%)",
-          "hsl(60.0 15.8% 49%)",
-          "hsl(60.0 15.8% 61%)",
-          "hsl(60.0 15.8% 72%)",
-          "hsl(60.0 15.8% 84%)",
-          "hsl(60.0 15.8% 95%)"
+          "oklch(15% 0.0155 86.43)",
+          "oklch(26% 0.0155 86.43)",
+          "oklch(38% 0.0155 86.43)",
+          "oklch(49% 0.0155 86.43)",
+          "oklch(61% 0.0155 86.43)",
+          "oklch(72% 0.0155 86.43)",
+          "oklch(84% 0.0155 86.43)",
+          "oklch(95% 0.0155 86.43)"
         ]
       },
       "card": {
         "role": "neutral",
-        "displayName": "Card",
+        "displayName": "Off-white surface",
         "tonalRamp": [
-          "hsl(0.0 0.0% 15%)",
-          "hsl(0.0 0.0% 26%)",
-          "hsl(0.0 0.0% 38%)",
-          "hsl(0.0 0.0% 49%)",
-          "hsl(0.0 0.0% 61%)",
-          "hsl(0.0 0.0% 72%)",
-          "hsl(0.0 0.0% 84%)",
-          "hsl(0.0 0.0% 95%)"
-        ]
-      },
-      "card-2": {
-        "role": "neutral",
-        "displayName": "Card 2",
-        "tonalRamp": [
-          "hsl(60.0 16.7% 15%)",
-          "hsl(60.0 16.7% 26%)",
-          "hsl(60.0 16.7% 38%)",
-          "hsl(60.0 16.7% 49%)",
-          "hsl(60.0 16.7% 61%)",
-          "hsl(60.0 16.7% 72%)",
-          "hsl(60.0 16.7% 84%)",
-          "hsl(60.0 16.7% 95%)"
-        ]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Ink",
-        "tonalRamp": [
-          "hsl(48.0 13.5% 15%)",
-          "hsl(48.0 13.5% 26%)",
-          "hsl(48.0 13.5% 38%)",
-          "hsl(48.0 13.5% 49%)",
-          "hsl(48.0 13.5% 61%)",
-          "hsl(48.0 13.5% 72%)",
-          "hsl(48.0 13.5% 84%)",
-          "hsl(48.0 13.5% 95%)"
-        ]
-      },
-      "mut": {
-        "role": "neutral",
-        "displayName": "Mut",
-        "tonalRamp": [
-          "hsl(36.0 4.3% 15%)",
-          "hsl(36.0 4.3% 26%)",
-          "hsl(36.0 4.3% 38%)",
-          "hsl(36.0 4.3% 49%)",
-          "hsl(36.0 4.3% 61%)",
-          "hsl(36.0 4.3% 72%)",
-          "hsl(36.0 4.3% 84%)",
-          "hsl(36.0 4.3% 95%)"
+          "oklch(15% 0.0069 88.64)",
+          "oklch(26% 0.0069 88.64)",
+          "oklch(38% 0.0069 88.64)",
+          "oklch(49% 0.0069 88.64)",
+          "oklch(61% 0.0069 88.64)",
+          "oklch(72% 0.0069 88.64)",
+          "oklch(84% 0.0069 88.64)",
+          "oklch(95% 0.0069 88.64)"
         ]
       },
       "ln": {
         "role": "neutral",
-        "displayName": "Ln",
+        "displayName": "Warm border",
         "tonalRamp": [
-          "hsl(46.2 20.0% 15%)",
-          "hsl(46.2 20.0% 26%)",
-          "hsl(46.2 20.0% 38%)",
-          "hsl(46.2 20.0% 49%)",
-          "hsl(46.2 20.0% 61%)",
-          "hsl(46.2 20.0% 72%)",
-          "hsl(46.2 20.0% 84%)",
-          "hsl(46.2 20.0% 95%)"
+          "oklch(15% 0.0271 85.67)",
+          "oklch(26% 0.0271 85.67)",
+          "oklch(38% 0.0271 85.67)",
+          "oklch(49% 0.0271 85.67)",
+          "oklch(61% 0.0271 85.67)",
+          "oklch(72% 0.0271 85.67)",
+          "oklch(84% 0.0271 85.67)",
+          "oklch(95% 0.0271 85.67)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Farm ink",
+        "tonalRamp": [
+          "oklch(15% 0.0073 95.32)",
+          "oklch(26% 0.0073 95.32)",
+          "oklch(38% 0.0073 95.32)",
+          "oklch(49% 0.0073 95.32)",
+          "oklch(61% 0.0073 95.32)",
+          "oklch(72% 0.0073 95.32)",
+          "oklch(84% 0.0073 95.32)",
+          "oklch(95% 0.0073 95.32)"
+        ]
+      },
+      "mut": {
+        "role": "neutral",
+        "displayName": "Muted brown",
+        "tonalRamp": [
+          "oklch(15% 0.0218 83.02)",
+          "oklch(26% 0.0218 83.02)",
+          "oklch(38% 0.0218 83.02)",
+          "oklch(49% 0.0218 83.02)",
+          "oklch(61% 0.0218 83.02)",
+          "oklch(72% 0.0218 83.02)",
+          "oklch(84% 0.0218 83.02)",
+          "oklch(95% 0.0218 83.02)"
+        ]
+      },
+      "acc": {
+        "role": "primary",
+        "displayName": "Farm gold",
+        "tonalRamp": [
+          "oklch(15% 0.1249 77.01)",
+          "oklch(26% 0.1249 77.01)",
+          "oklch(38% 0.1249 77.01)",
+          "oklch(49% 0.1249 77.01)",
+          "oklch(61% 0.1249 77.01)",
+          "oklch(72% 0.1249 77.01)",
+          "oklch(84% 0.1249 77.01)",
+          "oklch(95% 0.1249 77.01)"
+        ]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Link",
+        "tonalRamp": [
+          "oklch(15% 0.1062 75.67)",
+          "oklch(26% 0.1062 75.67)",
+          "oklch(38% 0.1062 75.67)",
+          "oklch(49% 0.1062 75.67)",
+          "oklch(61% 0.1062 75.67)",
+          "oklch(72% 0.1062 75.67)",
+          "oklch(84% 0.1062 75.67)",
+          "oklch(95% 0.1062 75.67)"
+        ]
+      },
+      "selected": {
+        "role": "primary",
+        "displayName": "Selected",
+        "tonalRamp": [
+          "oklch(15% 0.1082 94.15)",
+          "oklch(26% 0.1082 94.15)",
+          "oklch(38% 0.1082 94.15)",
+          "oklch(49% 0.1082 94.15)",
+          "oklch(61% 0.1082 94.15)",
+          "oklch(72% 0.1082 94.15)",
+          "oklch(84% 0.1082 94.15)",
+          "oklch(95% 0.1082 94.15)"
+        ]
+      },
+      "soft-gold": {
+        "role": "primary",
+        "displayName": "Soft Gold",
+        "tonalRamp": [
+          "oklch(15% 0.0557 95.05)",
+          "oklch(26% 0.0557 95.05)",
+          "oklch(38% 0.0557 95.05)",
+          "oklch(49% 0.0557 95.05)",
+          "oklch(61% 0.0557 95.05)",
+          "oklch(72% 0.0557 95.05)",
+          "oklch(84% 0.0557 95.05)",
+          "oklch(95% 0.0557 95.05)"
         ]
       },
       "fill": {
         "role": "neutral",
         "displayName": "Fill",
         "tonalRamp": [
-          "hsl(43.6 24.4% 15%)",
-          "hsl(43.6 24.4% 26%)",
-          "hsl(43.6 24.4% 38%)",
-          "hsl(43.6 24.4% 49%)",
-          "hsl(43.6 24.4% 61%)",
-          "hsl(43.6 24.4% 72%)",
-          "hsl(43.6 24.4% 84%)",
-          "hsl(43.6 24.4% 95%)"
-        ]
-      },
-      "acc": {
-        "role": "primary",
-        "displayName": "Acc",
-        "tonalRamp": [
-          "hsl(41.2 100.0% 15%)",
-          "hsl(41.2 100.0% 26%)",
-          "hsl(41.2 100.0% 38%)",
-          "hsl(41.2 100.0% 49%)",
-          "hsl(41.2 100.0% 61%)",
-          "hsl(41.2 100.0% 72%)",
-          "hsl(41.2 100.0% 84%)",
-          "hsl(41.2 100.0% 95%)"
-        ]
-      },
-      "acc-2": {
-        "role": "primary",
-        "displayName": "Acc 2",
-        "tonalRamp": [
-          "hsl(40.4 79.7% 15%)",
-          "hsl(40.4 79.7% 26%)",
-          "hsl(40.4 79.7% 38%)",
-          "hsl(40.4 79.7% 49%)",
-          "hsl(40.4 79.7% 61%)",
-          "hsl(40.4 79.7% 72%)",
-          "hsl(40.4 79.7% 84%)",
-          "hsl(40.4 79.7% 95%)"
-        ]
-      },
-      "acc-soft": {
-        "role": "neutral",
-        "displayName": "Acc Soft",
-        "tonalRamp": [
-          "hsl(41 100% 15%)",
-          "hsl(41 100% 26%)",
-          "hsl(41 100% 38%)",
-          "hsl(41 100% 49%)",
-          "hsl(41 100% 61%)",
-          "hsl(41 100% 72%)",
-          "hsl(41 100% 84%)",
-          "hsl(41 100% 95%)"
-        ]
-      },
-      "bad": {
-        "role": "semantic",
-        "displayName": "Bad",
-        "tonalRamp": [
-          "hsl(3.2 71.3% 15%)",
-          "hsl(3.2 71.3% 26%)",
-          "hsl(3.2 71.3% 38%)",
-          "hsl(3.2 71.3% 49%)",
-          "hsl(3.2 71.3% 61%)",
-          "hsl(3.2 71.3% 72%)",
-          "hsl(3.2 71.3% 84%)",
-          "hsl(3.2 71.3% 95%)"
+          "oklch(15% 0.0184 86.15)",
+          "oklch(26% 0.0184 86.15)",
+          "oklch(38% 0.0184 86.15)",
+          "oklch(49% 0.0184 86.15)",
+          "oklch(61% 0.0184 86.15)",
+          "oklch(72% 0.0184 86.15)",
+          "oklch(84% 0.0184 86.15)",
+          "oklch(95% 0.0184 86.15)"
         ]
       },
       "ok": {
         "role": "semantic",
         "displayName": "Ok",
         "tonalRamp": [
-          "hsl(123.0 46.2% 15%)",
-          "hsl(123.0 46.2% 26%)",
-          "hsl(123.0 46.2% 38%)",
-          "hsl(123.0 46.2% 49%)",
-          "hsl(123.0 46.2% 61%)",
-          "hsl(123.0 46.2% 72%)",
-          "hsl(123.0 46.2% 84%)",
-          "hsl(123.0 46.2% 95%)"
+          "oklch(15% 0.0944 150.13)",
+          "oklch(26% 0.0944 150.13)",
+          "oklch(38% 0.0944 150.13)",
+          "oklch(49% 0.0944 150.13)",
+          "oklch(61% 0.0944 150.13)",
+          "oklch(72% 0.0944 150.13)",
+          "oklch(84% 0.0944 150.13)",
+          "oklch(95% 0.0944 150.13)"
         ]
       },
-      "shell-cream": {
+      "ok-soft": {
+        "role": "semantic",
+        "displayName": "Ok Soft",
+        "tonalRamp": [
+          "oklch(15% 0.0276 136.89)",
+          "oklch(26% 0.0276 136.89)",
+          "oklch(38% 0.0276 136.89)",
+          "oklch(49% 0.0276 136.89)",
+          "oklch(61% 0.0276 136.89)",
+          "oklch(72% 0.0276 136.89)",
+          "oklch(84% 0.0276 136.89)",
+          "oklch(95% 0.0276 136.89)"
+        ]
+      },
+      "bad": {
+        "role": "semantic",
+        "displayName": "Bad",
+        "tonalRamp": [
+          "oklch(15% 0.1330 33.50)",
+          "oklch(26% 0.1330 33.50)",
+          "oklch(38% 0.1330 33.50)",
+          "oklch(49% 0.1330 33.50)",
+          "oklch(61% 0.1330 33.50)",
+          "oklch(72% 0.1330 33.50)",
+          "oklch(84% 0.1330 33.50)",
+          "oklch(95% 0.1330 33.50)"
+        ]
+      },
+      "bad-soft": {
+        "role": "semantic",
+        "displayName": "Bad Soft",
+        "tonalRamp": [
+          "oklch(15% 0.0292 41.74)",
+          "oklch(26% 0.0292 41.74)",
+          "oklch(38% 0.0292 41.74)",
+          "oklch(49% 0.0292 41.74)",
+          "oklch(61% 0.0292 41.74)",
+          "oklch(72% 0.0292 41.74)",
+          "oklch(84% 0.0292 41.74)",
+          "oklch(95% 0.0292 41.74)"
+        ]
+      },
+      "watch": {
+        "role": "semantic",
+        "displayName": "Watch",
+        "tonalRamp": [
+          "oklch(15% 0.1009 72.77)",
+          "oklch(26% 0.1009 72.77)",
+          "oklch(38% 0.1009 72.77)",
+          "oklch(49% 0.1009 72.77)",
+          "oklch(61% 0.1009 72.77)",
+          "oklch(72% 0.1009 72.77)",
+          "oklch(84% 0.1009 72.77)",
+          "oklch(95% 0.1009 72.77)"
+        ]
+      },
+      "watch-soft": {
+        "role": "semantic",
+        "displayName": "Watch Soft",
+        "tonalRamp": [
+          "oklch(15% 0.0429 87.96)",
+          "oklch(26% 0.0429 87.96)",
+          "oklch(38% 0.0429 87.96)",
+          "oklch(49% 0.0429 87.96)",
+          "oklch(61% 0.0429 87.96)",
+          "oklch(72% 0.0429 87.96)",
+          "oklch(84% 0.0429 87.96)",
+          "oklch(95% 0.0429 87.96)"
+        ]
+      },
+      "info": {
+        "role": "semantic",
+        "displayName": "Info",
+        "tonalRamp": [
+          "oklch(15% 0.0694 240.50)",
+          "oklch(26% 0.0694 240.50)",
+          "oklch(38% 0.0694 240.50)",
+          "oklch(49% 0.0694 240.50)",
+          "oklch(61% 0.0694 240.50)",
+          "oklch(72% 0.0694 240.50)",
+          "oklch(84% 0.0694 240.50)",
+          "oklch(95% 0.0694 240.50)"
+        ]
+      },
+      "info-soft": {
+        "role": "semantic",
+        "displayName": "Info Soft",
+        "tonalRamp": [
+          "oklch(15% 0.0126 236.63)",
+          "oklch(26% 0.0126 236.63)",
+          "oklch(38% 0.0126 236.63)",
+          "oklch(49% 0.0126 236.63)",
+          "oklch(61% 0.0126 236.63)",
+          "oklch(72% 0.0126 236.63)",
+          "oklch(84% 0.0126 236.63)",
+          "oklch(95% 0.0126 236.63)"
+        ]
+      },
+      "home-action": {
         "role": "neutral",
-        "displayName": "Shell Cream",
-        "tonalRamp": [
-          "hsl(45.0 30.8% 15%)",
-          "hsl(45.0 30.8% 26%)",
-          "hsl(45.0 30.8% 38%)",
-          "hsl(45.0 30.8% 49%)",
-          "hsl(45.0 30.8% 61%)",
-          "hsl(45.0 30.8% 72%)",
-          "hsl(45.0 30.8% 84%)",
-          "hsl(45.0 30.8% 95%)"
-        ]
+        "displayName": "Home charcoal action"
       },
-      "overview-oat": {
+      "home-action-hover": {
         "role": "neutral",
-        "displayName": "Overview Oat",
-        "tonalRamp": [
-          "hsl(42.9 26.4% 15%)",
-          "hsl(42.9 26.4% 26%)",
-          "hsl(42.9 26.4% 38%)",
-          "hsl(42.9 26.4% 49%)",
-          "hsl(42.9 26.4% 61%)",
-          "hsl(42.9 26.4% 72%)",
-          "hsl(42.9 26.4% 84%)",
-          "hsl(42.9 26.4% 95%)"
-        ]
-      },
-      "calendar-charcoal": {
-        "role": "neutral",
-        "displayName": "Calendar Charcoal",
-        "tonalRamp": [
-          "hsl(204.0 5.7% 15%)",
-          "hsl(204.0 5.7% 26%)",
-          "hsl(204.0 5.7% 38%)",
-          "hsl(204.0 5.7% 49%)",
-          "hsl(204.0 5.7% 61%)",
-          "hsl(204.0 5.7% 72%)",
-          "hsl(204.0 5.7% 84%)",
-          "hsl(204.0 5.7% 95%)"
-        ]
-      },
-      "egg-sun": {
-        "role": "secondary",
-        "displayName": "Egg Sun",
-        "tonalRamp": [
-          "hsl(47.8 100.0% 15%)",
-          "hsl(47.8 100.0% 26%)",
-          "hsl(47.8 100.0% 38%)",
-          "hsl(47.8 100.0% 49%)",
-          "hsl(47.8 100.0% 61%)",
-          "hsl(47.8 100.0% 72%)",
-          "hsl(47.8 100.0% 84%)",
-          "hsl(47.8 100.0% 95%)"
-        ]
-      },
-      "egg-peach": {
-        "role": "secondary",
-        "displayName": "Egg Peach",
-        "tonalRamp": [
-          "hsl(19.1 79.3% 15%)",
-          "hsl(19.1 79.3% 26%)",
-          "hsl(19.1 79.3% 38%)",
-          "hsl(19.1 79.3% 49%)",
-          "hsl(19.1 79.3% 61%)",
-          "hsl(19.1 79.3% 72%)",
-          "hsl(19.1 79.3% 84%)",
-          "hsl(19.1 79.3% 95%)"
-        ]
-      },
-      "egg-olive": {
-        "role": "secondary",
-        "displayName": "Egg Olive",
-        "tonalRamp": [
-          "hsl(97.5 7.0% 15%)",
-          "hsl(97.5 7.0% 26%)",
-          "hsl(97.5 7.0% 38%)",
-          "hsl(97.5 7.0% 49%)",
-          "hsl(97.5 7.0% 61%)",
-          "hsl(97.5 7.0% 72%)",
-          "hsl(97.5 7.0% 84%)",
-          "hsl(97.5 7.0% 95%)"
-        ]
+        "displayName": "Home charcoal hover"
       }
     },
     "typographyMeta": {
       "headline": {
-        "displayName": "Dashboard headline",
-        "purpose": "Greeting at the top of the dashboard."
+        "displayName": "Page heading",
+        "purpose": "Main page title; phone and Home variants are documented in DESIGN.md."
+      },
+      "body": {
+        "displayName": "Operational body",
+        "purpose": "Shared record and explanatory copy."
       }
     },
     "shadows": [
       {
-        "name": "card",
-        "value": "0 1px 3px rgba(42, 40, 32, 0.06), 0 1px 2px rgba(42, 40, 32, 0.04)",
-        "purpose": "Established record cards."
+        "name": "notification",
+        "value": "0 14px 40px -12px #57452240",
+        "purpose": "Temporary notification layer."
       },
       {
-        "name": "preview",
-        "value": "0 12px 35px rgb(0 0 0 / 22%)",
-        "purpose": "Calendar hover/focus summary."
+        "name": "entry-drawer",
+        "value": "-12px 0 60px #34270F22",
+        "purpose": "Desktop entry overlay."
       },
       {
-        "name": "dialog",
-        "value": "0 25px 90px rgb(0 0 0 / 24%)",
-        "purpose": "Daily detail dialog."
+        "name": "login",
+        "value": "0 16px 60px -25px #9A702233",
+        "purpose": "Centered striped Login card."
+      },
+      {
+        "name": "undo",
+        "value": "0 12px 30px -12px #58451E55",
+        "purpose": "Temporary undo notice."
       }
     ],
     "motion": [
       {
-        "name": "interactive-easing",
-        "value": "cubic-bezier(.16,1,.3,1)",
-        "purpose": "Egg, day, arrow and dialog movement."
+        "name": "greeting",
+        "value": ".6s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Tap greeting CSS animation."
       },
       {
-        "name": "egg-hover",
-        "value": "400ms",
-        "purpose": "Financial egg lift."
+        "name": "feather-float",
+        "value": "4s ease-in-out infinite",
+        "purpose": "Floating ChickCount launcher."
       },
       {
-        "name": "day-and-arrow",
-        "value": "220ms",
-        "purpose": "Interactive transforms."
+        "name": "drawer",
+        "value": "transform .25s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Sidebar drawer transition."
       },
       {
-        "name": "dialog-arrival",
-        "value": "240ms",
-        "purpose": "Small fade and upward arrival."
-      },
-      {
-        "name": "chicken-idle",
-        "value": "6s ease-in-out infinite",
-        "purpose": "Ambient mascot rocking."
-      },
-      {
-        "name": "coop-idle",
-        "value": "7s ease-in-out infinite",
-        "purpose": "Staggered decorative egg bobbing."
-      },
-      {
-        "name": "chart-entry",
-        "value": "700ms easeOutQuart",
-        "purpose": "Closed-batch chart entry; zero duration under reduced motion."
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable CSS animation/transitions and smooth scrolling; supplied external SVG assets contain their own internal reduced-motion media overrides. Runtime preference behavior not independently tested."
       }
     ],
     "breakpoints": [
       {
-        "name": "wide-shell",
-        "value": "1650px"
+        "name": "wide-companion",
+        "value": "1550px"
+      },
+      {
+        "name": "companion-stack",
+        "value": "1450px"
       },
       {
         "name": "compact-desktop",
-        "value": "1150px"
+        "value": "1200px"
       },
       {
-        "name": "stacked",
-        "value": "960px"
+        "name": "drawer",
+        "value": "950px"
       },
       {
-        "name": "compact-shell",
-        "value": "820px"
+        "name": "phone",
+        "value": "719px"
       },
       {
-        "name": "mobile",
-        "value": "600px"
+        "name": "compact-home-stack",
+        "value": "1100px"
       }
     ]
   },
   "components": [
     {
-      "name": "Gold action",
+      "name": "Primary button",
       "kind": "button",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<button class=\"ds-gold\">Save changes</button>",
-      "css": ".ds-gold{font:600 14px Poppins,sans-serif;border:1px solid var(--acc,#c98a00);background:var(--acc,#c98a00);color:#1c1400;border-radius:8px;padding:8px 14px;cursor:pointer;transition:opacity .15s}.ds-gold:hover{opacity:.88}.ds-gold:focus-visible{outline:3px solid #a57600;outline-offset:3px;}",
-      "refersTo": "button-primary"
+      "refersTo": "button-primary",
+      "description": "Pill action with visible keyboard focus.",
+      "html": "<button class=\"ds-btn-primary\">Save entry</button>",
+      "css": ".ds-btn-primary{font:600 13px Poppins,system-ui,sans-serif;min-height:44px;border:1px solid #D8CBB0;border-radius:999px;padding:10px 18px;background:var(--acc,#C08A2B);color:#2B2110;cursor:pointer}.ds-btn-primary:hover{background:#D49A35}.ds-btn-primary:focus-visible{outline:3px solid #8F6210;outline-offset:3px}"
     },
     {
-      "name": "Dashboard action",
+      "name": "Secondary button",
       "kind": "button",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<button class=\"ds-action\">Manage batches <span>\u2197</span></button>",
-      "css": ".ds-action{display:flex;gap:20px;align-items:center;font:12px Poppins,sans-serif;background:#292b2c;color:#fff8db;border:0;border-radius:24px;padding:12px 18px;min-height:44px;cursor:pointer}.ds-action:hover{background:#46463a}.ds-action span{transition:transform 220ms cubic-bezier(.16,1,.3,1)}.ds-action:hover span{transform:translate(2px,-2px)}.ds-action:focus-visible{outline:3px solid #a57600;outline-offset:3px;}@media(prefers-reduced-motion:reduce){.ds-action span{transition:none}}",
-      "refersTo": "button-dashboard"
+      "refersTo": "button-secondary",
+      "description": "Pill action with visible keyboard focus.",
+      "html": "<button class=\"ds-btn-secondary\">Save entry</button>",
+      "css": ".ds-btn-secondary{font:600 13px Poppins,system-ui,sans-serif;min-height:44px;border:1px solid #D8CBB0;border-radius:999px;padding:10px 18px;background:var(--card,#FFFDF8);color:#59451D;cursor:pointer}.ds-btn-secondary:hover{background:#FCF1C7}.ds-btn-secondary:focus-visible{outline:3px solid #8F6210;outline-offset:3px}"
     },
     {
-      "name": "Record field",
+      "name": "Entry field",
       "kind": "input",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<label class=\"ds-label\">Batch name<input class=\"ds-input\" placeholder=\"Batch name\" /></label>",
-      "css": ".ds-label{display:grid;gap:6px;font:14px Poppins,sans-serif;color:var(--ink,#2a2820)}.ds-input{font:inherit;color:var(--ink,#2a2820);background:var(--fill,#eeebe3);border:1px solid var(--ln,#e5e2d8);border-radius:8px;padding:8px 10px;transition:border-color .15s}.ds-input:focus-visible{outline:2px solid var(--acc,#c98a00);outline-offset:-1px;border-color:var(--acc,#c98a00)}",
-      "refersTo": "input"
+      "refersTo": "input",
+      "description": "Warm bordered operational field.",
+      "html": "<label class=\"ds-field\">Feed (kg)<input placeholder=\"0.00\" inputmode=\"decimal\" /></label>",
+      "css": ".ds-field{display:grid;gap:6px;font:12px Poppins,system-ui,sans-serif;color:var(--mut,#6B6457)}.ds-field input{font:14px Poppins,system-ui,sans-serif;min-height:44px;padding:11px 14px;border:1px solid #D7CDB7;border-radius:14px;background:var(--card,#FFFDF8);color:var(--ink,#2B2A26)}.ds-field input:hover{border-color:#C08A2B}.ds-field input:focus{outline:2px solid #8F6210;outline-offset:2px}"
     },
     {
-      "name": "Dashboard navigation item",
-      "kind": "nav",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<button class=\"ds-nav\" aria-current=\"page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/></svg><span>Overview</span></button>",
-      "css": ".ds-nav{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:64px;width:86px;padding:9px 5px;border:0;border-radius:21px;background:#2a2c2d;color:#ffe16a;font:500 10px Poppins,sans-serif;cursor:pointer}.ds-nav:hover{background:#3a3b36}.ds-nav:focus-visible{outline:3px solid #a57600;outline-offset:3px;}"
-    },
-    {
-      "name": "Open status",
-      "kind": "chip",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<span class=\"ds-chip\">Open</span>",
-      "css": ".ds-chip{display:inline-block;font:600 11px Poppins,sans-serif;border:1px solid var(--acc,#c98a00);border-radius:20px;padding:2px 10px;color:var(--acc,#c98a00);background:var(--acc-soft,rgba(201,138,0,.10));white-space:nowrap}"
-    },
-    {
-      "name": "Dashboard panel",
+      "name": "Record panel",
       "kind": "card",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<section class=\"ds-panel\"><h2>Your growing flocks</h2><p>A daily check-in for your open batches.</p></section>",
-      "css": ".ds-panel{background:var(--card,#ffffff);border-radius:24px;padding:24px;color:var(--ink,#2a2820);font:14px Poppins,sans-serif}.ds-panel h2{font-size:16px;font-weight:500;margin:0}.ds-panel p{font-size:11px;color:#746f62;margin:5px 0 22px}",
-      "refersTo": "card-dashboard"
+      "refersTo": "card",
+      "description": "Flat off-white panel with warm border.",
+      "html": "<section class=\"ds-card\"><h2>Flock health</h2><p>Recorded care, one day at a time.</p></section>",
+      "css": ".ds-card{padding:24px;background:var(--card,#FFFDF8);color:var(--ink,#2B2A26);border:1px solid var(--ln,#ECE3D0);border-radius:24px;font:14px/1.55 Poppins,system-ui,sans-serif}.ds-card h2{font-size:20px;font-weight:600;margin:0}.ds-card p{color:var(--mut,#6B6457);margin-bottom:0}"
     },
     {
-      "name": "Calendar day",
-      "kind": "custom",
-      "description": "Extracted from the implemented ChickPence styles.",
-      "html": "<button class=\"ds-day\" aria-label=\"Daily profit: 1200 pesos. View day details.\"><span>12</span><small>+1.2k</small></button>",
-      "css": ".ds-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;min-width:44px;padding:4px 0;border:1px solid transparent;border-radius:13px;background:#4e4b2f;color:#ffe878;font:11px Poppins,sans-serif;font-variant-numeric:tabular-nums;cursor:pointer;transition:background-color 180ms,transform 220ms cubic-bezier(.16,1,.3,1)}.ds-day small{font-size:8px;line-height:1.3}.ds-day:hover,.ds-day:focus-visible{background:#ffe16a;color:#292c2e;transform:translateY(-2px)}.ds-day:focus-visible{outline:3px solid #a57600;outline-offset:3px;}.ds-day:active{transform:scale(.94)}@media(prefers-reduced-motion:reduce){.ds-day{transition:none}.ds-day:hover,.ds-day:focus-visible,.ds-day:active{transform:none}}"
+      "name": "Status chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Text-labeled neutral status.",
+      "html": "<span class=\"ds-chip\">Open</span>",
+      "css": ".ds-chip{display:inline-flex;padding:5px 10px;border-radius:999px;background:var(--fill,#F4EEE1);color:#655B49;font:500 12px Poppins,system-ui,sans-serif}"
+    },
+    {
+      "name": "Selected navigation",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Pale-gold current section; sidebar and phone patterns are surface-specific.",
+      "html": "<nav aria-label=\"Farm sections\"><button class=\"ds-nav\" aria-current=\"page\">Home</button></nav>",
+      "css": ".ds-nav{width:100%;text-align:left;font:500 14px Poppins,system-ui,sans-serif;padding:11px 12px;min-height:46px;border:0;border-radius:14px;background:var(--selected,#F7DF8A);color:var(--ink,#2B2A26);cursor:pointer}.ds-nav:hover{background:#FCF1C7}.ds-nav:focus-visible{outline:3px solid #8F6210;outline-offset:3px}"
+    },
+    {
+      "name": "Home primary action",
+      "kind": "button",
+      "refersTo": "button-home",
+      "description": "Contextual charcoal Home action; other sections retain gold primary actions.",
+      "html": "<button class=\"ds-btn-home\">See answer \u2192</button>",
+      "css": ".ds-btn-home{background:#2B2A26;color:#FFFDF8;border:0;border-radius:999px;padding:9px 12px;min-height:40px;font:600 11px Poppins,system-ui,sans-serif;cursor:pointer}.ds-btn-home:hover{background:#48463E}.ds-btn-home:focus-visible{outline:3px solid #8F6210;outline-offset:3px}@media(max-width:719px){.ds-btn-home{min-height:44px;font-size:12px;padding:10px 14px}}"
     }
   ],
   "narrative": {
-    "overview": "The incumbent world is warm gold, cream, white and Poppins. The approved dashboard adaptation adds generous rounded panels, eggs and the existing chicken mascot to the fitness reference\u2019s composition. This records the implementation; it does not establish an unconfirmed brand metaphor.\n\nThe shell and dashboard use broad tonal regions around compact operational records. Login remains governed by its preserved surface brief. Financial values and health states retain explicit labels alongside color.",
+    "northStar": "User-supplied cream-and-gold farm interface",
+    "overview": "The approved world is the user's supplied cream-and-gold farm interface: friendly animated chickens, faint footprints, off-white rounded surfaces and clear Poppins records. The nine-section Markdown brief governs its accompanying HTML boards; the confirmed Staff phone navigation and centered striped Login resolve the conflicting reference layouts. No new brand metaphor is inferred.\n\nWarm imagery supports practical work. State explanations, record labels and financial signs stay readable alongside the companion and colored surfaces. This refresh records the implemented world in `src/redesign.css`, which overrides the older stylesheet; it does not change PRODUCT.md's calculation or service boundaries.",
     "keyCharacteristics": [
-      "Warm neutral backgrounds and gold accents.",
-      "Rounded operational panels with poultry imagery.",
-      "Compact Poppins labels and prominent tabular financial values.",
-      "Small ambient and interactive movements with reduced-motion support."
+      "Cream canvas, off-white cards, warm borders and gold actions.",
+      "Locally hosted Poppins and supplied animated SVG chickens.",
+      "Broad rounded panels, pill actions and labeled operational records.",
+      "Responsive record cards and visible keyboard focus."
     ],
     "rules": [
       {
@@ -411,14 +421,15 @@
       }
     ],
     "dos": [
-      "**Do** preserve Poppins, warm neutrals and established gold actions when extending existing screens.",
-      "**Do** keep daily recorded P&L visibly distinct from closed-batch profit.",
-      "**Do** preserve visible keyboard focus and the reduced-motion behavior."
+      "Do use the approved cream, off-white, gold and locally hosted Poppins across app sections.",
+      "Do preserve the supplied animated SVG chickens, logo and quiet footprint canvas.",
+      "Do preserve readable state labels, visible focus and reduced-motion handling.",
+      "Do keep daily recorded P&L distinct from completed batch profit and device previews explicitly labeled."
     ],
     "donts": [
-      "**Don't** make color the sole carrier of financial or health state.",
-      "**Don't** treat the dashboard\u2019s small calendar annotations as the global body size.",
-      "**Don't** replace the existing chicken image or its provenance as part of routine surface work."
+      "Don't restore the superseded charcoal calendar, egg-shaped financial totals or sprite-column companion art.",
+      "Don't add a bottom tab bar to Staff phones or replace the centered striped Login composition.",
+      "Don't turn visual role controls or local previews into claims of server authorization or completed shared workflows."
     ]
   }
 }

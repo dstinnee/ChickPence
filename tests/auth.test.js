@@ -26,6 +26,12 @@ beforeEach(() => {
 });
 afterEach(() => vi.unstubAllGlobals());
 
+it('preserves the account display name for the personalized welcome', async () => {
+  getSupabase.mockReturnValue({ auth: { signInWithPassword: vi.fn(async () => ({data:{user:{id:'u1',email:'olivia@example.com',user_metadata:{full_name:'Dr. Olivia'}}},error:null})) } });
+  await AuthService.login('olivia@example.com', 'test-password');
+  expect(AuthService.getUser()).toMatchObject({ name:'Dr. Olivia', email:'olivia@example.com' });
+});
+
 describe('logout', () => {
   it('signs out this device only, not every device of the account', async () => {
     const signOut = vi.fn(async () => ({ error: null }));

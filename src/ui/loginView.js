@@ -1,3 +1,4 @@
+import { companionArt } from './flockCompanion.js';
 import { AuthService } from '../services/auth.js';
 import { isSupabaseConfigured } from '../services/supabaseClient.js';
 import { openSupabaseConfigModal } from './modals.js';
@@ -13,6 +14,7 @@ const arrowIcon = icon('<path d="M5 12h14m-5-5 5 5-5 5"/>');
 
 export function renderLogin() {
   const isCloud = isSupabaseConfigured();
+  const demoEnabled=import.meta.env.DEV || import.meta.env.VITE_DEMO_MODE==='true';
 
   return `
     <main class="login-wrapper">
@@ -24,7 +26,7 @@ export function renderLogin() {
 
         <div class="login-mascot-scene">
           <span class="login-greeting" aria-hidden="true">Hi there!</span>
-          <img class="login-mascot" src="/images/chicken-mascot.png" alt="A friendly golden chicken waving hello" width="200" height="200" fetchpriority="high" />
+          ${companionArt({stage:'ready',mood:'hello'}, 'login-mascot')}
         </div>
 
         <form id="login-form" class="login-form">
@@ -45,18 +47,13 @@ export function renderLogin() {
           </button>
         </form>
 
-        <div class="login-divider"><span>or</span></div>
-        <button class="login-button login-demo" id="btn-quick-demo" type="button">Instant Demo Mode</button>
-        <p class="login-demo-note">A little peek. No account needed.</p>
+${demoEnabled?'<div class="login-divider"><span>or</span></div><button class="login-button login-demo" id="btn-quick-demo" type="button">Instant Demo Mode</button><p class="login-demo-note">A little peek. No account needed.</p>':''}
 
         <footer class="login-card-footer">
-          <button class="login-cloud" id="btn-login-cloud-settings" type="button">
-            ${cloudIcon}<span>${isCloud ? 'Supabase Connected' : 'Connect Supabase Cloud'}</span>
-          </button>
           <p>Poultry Cost &amp; Profitability Analysis</p>
         </footer>
       </section>
-      <p class="login-prototype">Thesis Prototype (BSCS, PLM) <span aria-hidden="true">·</span> Offline-First PWA</p>
+
     </main>
   `;
 }
@@ -70,6 +67,14 @@ export function attachLoginListeners(container, onLoginSuccess) {
   const demoBtn = container.querySelector('#btn-quick-demo');
   const cloudBtn = container.querySelector('#btn-login-cloud-settings');
   const toggleBtn = container.querySelector('#btn-toggle-password');
+  passInput?.addEventListener('focus',()=>{
+    container.querySelector('.login-mascot').src='/images/chickens/chicken-sleepy.svg';
+    container.querySelector('.login-greeting').textContent="I’m not peeking!";
+  });
+  passInput?.addEventListener('blur',()=>{
+    container.querySelector('.login-mascot').src='/images/chickens/chicken-hello.svg';
+    container.querySelector('.login-greeting').textContent='Hi there!';
+  });
   let isLoggingIn = false;
 
   const handleLogin = async (demo = false) => {
@@ -78,7 +83,7 @@ export function attachLoginListeners(container, onLoginSuccess) {
     const activeBtn = demo ? demoBtn : submitBtn;
     const originalContent = activeBtn.innerHTML;
     try {
-      submitBtn.disabled = demoBtn.disabled = cloudBtn.disabled = true;
+      [submitBtn,demoBtn].filter(Boolean).forEach(btn=>btn.disabled=true);
       activeBtn.textContent = demo ? 'Opening demo…' : 'Logging in…';
       form.setAttribute('aria-busy', 'true');
       errorMsg.style.display = 'none';
@@ -92,7 +97,7 @@ export function attachLoginListeners(container, onLoginSuccess) {
       errorMsg.style.display = 'block';
     } finally {
       isLoggingIn = false;
-      submitBtn.disabled = demoBtn.disabled = cloudBtn.disabled = false;
+      [submitBtn,demoBtn].filter(Boolean).forEach(btn=>btn.disabled=false);
       activeBtn.innerHTML = originalContent;
       form.removeAttribute('aria-busy');
     }

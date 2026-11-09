@@ -71,13 +71,10 @@ function renderBatchSelectorOptions(openBatches, selectedId) {
 // DATA TABLE (per batch)
 // ---------------------------------------------------------------------------
 
-function renderDataTable(activeTab, batchData) {
+export function renderDataTable(activeTab, batchData, options = {}) {
   const { batch, feed, mortality, sales } = batchData;
 
-  const editBtn = (table, id) => `
-    <button class="btn-icon" data-action="edit-row" data-table="${table}" data-id="${id}" title="Edit entry">✎</button>
-    <button class="btn-icon" data-action="delete-row" data-table="${table}" data-id="${id}" title="Delete entry" style="color: var(--bad); margin-left: 2px;">✕</button>
-  `;
+  const editBtn = (table,id) => options.staff && !options.editableIds?.includes(id) ? `<button type="button" class="btn-action" data-request-entry="${id}">Request correction</button>` : `<details class="rd-row-menu"><summary aria-label="Entry actions">⋯</summary><button type="button" data-action="edit-row" data-table="${table}" data-id="${id}">Edit entry</button>${options.staff?'':`<button type="button" data-action="delete-row" data-table="${table}" data-id="${id}">Delete entry</button>`}</details>`;
 
   const emptyRow = (cols) => `
     <tr><td colspan="${cols}" class="text-mut" style="text-align: center; padding: 24px;">No records yet.</td></tr>
@@ -99,7 +96,7 @@ function renderDataTable(activeTab, batchData) {
                   return `
                 <tr>
                   <td>${formatDate(f.entry_date)}</td>
-                  <td><b>${dispKg.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 3 })} kg</b></td>
+                  <td><b>${dispKg.toLocaleString('en-PH', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} kg</b></td>
                   <td>${editBtn('feed_logs', f.feed_log_id)}</td>
                 </tr>`;
               }).join('')
@@ -230,7 +227,7 @@ export function renderVoiceBar(voice, { supported, online = true, modelReady = t
  * expensePreview: { rows, values } | null — rows is the allocation preview (null when no batch is
  * active that day), values are the date and amounts it was made for, so the form keeps showing them.
  */
-function renderEntryFormPanel(activeTab, openBatches, selectedBatchId, editingItem, expensePreview, prefill = null, today = localToday()) {
+export function renderEntryFormPanel(activeTab, openBatches, selectedBatchId, editingItem, expensePreview, prefill = null, today = localToday()) {
   // A voice prefill fills the form like an edit, but saves as a new entry
   const src = editingItem || prefill?.values || null;
   const val = (field, fallback = '') => escapeHtml(src ? (src[field] ?? fallback) : fallback);
@@ -345,7 +342,7 @@ function renderEntryFormPanel(activeTab, openBatches, selectedBatchId, editingIt
     </label>
     <label class="form-field">
       Buyer Name
-      <input id="input-sale-buyer" type="text" ${chk('buyer_name')} placeholder="e.g. Buyer (placeholder)" value="${val('buyer_name', '')}" />
+      <input id="input-sale-buyer" type="text" ${chk('buyer_name')} placeholder="Buyer name" value="${val('buyer_name', '')}" />
     </label>
     <label class="form-field">
       Quantity Sold (heads)

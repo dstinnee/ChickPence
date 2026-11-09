@@ -1,3 +1,7 @@
+import { daysBetween, addDays } from '../services/guidedQuestions.js';
+import { healthStrip } from './operationsView.js';
+import { kpi, moneyCompact, barChart } from './redesignKit.js';
+import { pnlForMonth } from '../services/pnlCalendar.js';
 import { buildPnlLedger } from '../services/pnlCalendar.js';
 import { renderPnlCalendar, attachPnlCalendar } from './pnlCalendarView.js';
 import {
@@ -17,6 +21,8 @@ import { showToast } from './toast.js';
 import { renderBatchToggleIcon } from './batchesView.js';
 import { renderInsightsCard } from './insightsCard.js';
 import { escapeHtml } from './html.js';
+import { renderCompanion } from './flockCompanion.js';
+import { flockCompanion } from '../services/flockCompanion.js';
 
 // Chart.js is only needed for the Dashboard's profit chart, so it is loaded
 // on first use instead of in the main bundle (precached for offline use).
@@ -73,118 +79,34 @@ export function getDashboardChartData(closedBatchesWithData = []) {
   return { enrichedClosed, last5, avgNetProfit, avgSellingPricePerKg, allClosedSorted };
 }
 
-export function renderDashboard(openBatchesData, closedBatchesWithData, collapsedBatchIds = new Set(), insights = null, expenses = []) {
-  const { last5, avgNetProfit, avgSellingPricePerKg, allClosedSorted } =
-    getDashboardChartData(closedBatchesWithData);
-  const today = localToday();
-
-  const allCollapsed =
-    openBatchesData.length > 0 &&
-    openBatchesData.every((item) => collapsedBatchIds.has(item.batch.batch_id));
-
-  const hasActiveWarning = openBatchesData.some(
-    (item) => evalMortalityWarning(item.batch, item.mortality).mortalityFlag
-  );
-
-  // Open batches summary cards
-  const openCardsHtml = openBatchesData.length
-    ? openBatchesData.map((item, idx) => {
-        const { batch, feed, mortality, sales, allocations } = item;
-        const metrics = calcBatchMetrics(batch, allocations, sales, mortality, feed);
-        const warn = evalMortalityWarning(batch, mortality);
-        const liveHeads = liveHeadCount(batch, mortality, sales, today);
-        const isCollapsed = collapsedBatchIds.has(batch.batch_id);
-        const name = escapeHtml(batch.batch_name);
-
-        return `
-          <div class="card-box dash-batch-card dash-animate" id="dash-batch-card-${batch.batch_id}" style="--dash-delay:${0.15 + idx * 0.05}s;margin-bottom: 10px;">
-            <div class="flex-row">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <button
-                  type="button"
-                  class="btn-batch-toggle dash-batch-toggle"
-                  data-action="toggle-dash-batch-collapse"
-                  data-batch-id="${batch.batch_id}"
-                  title="${isCollapsed ? 'Maximize' : 'Minimize'}"
-                  aria-label="${isCollapsed ? 'Maximize' : 'Minimize'} ${name}"
-                  aria-expanded="${!isCollapsed}"
-                >
-                  ${renderBatchToggleIcon(isCollapsed)}
-                </button>
-                <b style="font-size: 15px;">${name}</b>
-              </div>
-              <span class="text-mut">Started ${formatDate(batch.start_date, true)} · <b>${liveHeads.toLocaleString()}</b> live</span>
-            </div>
-            <div class="batch-card-body" id="dash-batch-body-${batch.batch_id}" style="${isCollapsed ? 'display: none;' : ''}">
-              <div class="grid-3" style="margin-top:8px;">
-                <div class="stat-tile">
-                  <b class="stat-value">${formatPeso(metrics.totalCost)}</b>
-                  <span class="stat-label">Cost to Date</span>
-                </div>
-                <div class="stat-tile accent">
-                  <b class="stat-value">${formatPeso(metrics.revenue)}</b>
-                  <span class="stat-label">Sales to Date</span>
-                </div>
-                <div class="stat-tile ${warn.mortalityFlag ? 'danger' : ''}">
-                  <b class="stat-value">${formatPercent(metrics.mortalityRate)}</b>
-                  <span class="stat-label">Mortality</span>
-                </div>
-              </div>
-              ${warn.mortalityFlag ? `<div class="flag-alert" style="margin-top:8px;">⚠ Mortality ${formatPercent(warn.mortalityRate)} exceeds threshold (${escapeHtml(warn.mortalityThreshold)}%)</div>` : ''}
-            </div>
-          </div>`;
-      }).join('')
-    : `<div class="card-box" style="text-align:center;padding:24px;">
-        <div class="text-mut" style="font-size:14px;">No open batches.</div>
-        <button class="btn-action primary" data-action="go-batches" style="margin:10px auto 0;">+ Create New Batch</button>
-      </div>`;
-
-  const warningsHtml = openBatchesData.length
-    ? openBatchesData.map((item) => {
-        const warn = evalMortalityWarning(item.batch, item.mortality);
-        const name = escapeHtml(item.batch.batch_name);
-        const limit = escapeHtml(warn.mortalityThreshold);
-        if (!warn.mortalityFlag && warn.mortalityThreshold == null) {
-          return `<div class="ok-line text-mut">${name}: no mortality threshold set</div>`;
-        }
-        if (warn.mortalityFlag) {
-          return `<div class="flag-alert"><span>⚠ ${name}: Mortality ${formatPercent(warn.mortalityRate)} exceeds ${limit}%</span></div>`;
-        }
-        return `<div class="ok-line">✓ ${name}: Mortality ${formatPercent(warn.mortalityRate)} / limit ${limit}%</div>`;
-      }).join('')
-    : `<div class="text-mut">No open batches to monitor.</div>`;
-
-  const emptyChartMsg = `<div class="text-mut" style="padding: 24px; text-align: center;">No closed batches yet.</div>`;
-
-  const closedProfit = allClosedSorted.reduce((sum, item) => sum + item.netProfit, 0);
-  const closedRevenue = allClosedSorted.reduce((sum, item) => sum + calcTotalRevenue(item.sales), 0);
-  const closedCost = closedRevenue - closedProfit;
-  const heads = openBatchesData.reduce((sum,item) => sum + liveHeadCount(item.batch,item.mortality,item.sales,today),0);
-  const ledger = buildPnlLedger([...openBatchesData, ...closedBatchesWithData], expenses);
-  return `
-    <section class="flock-dashboard" aria-label="Farm dashboard">
-      <header class="flock-header"><div><h1>A good day to grow.</h1><p>Here’s how your flock is doing.</p></div><div class="flock-header-actions"><span>${formatDate(today,true)}</span><button type="button" class="flock-primary" data-action="go-batches">Manage batches <span aria-hidden="true">↗</span></button></div></header>
-      <div class="flock-top-grid">
-        <section class="flock-overview"><div class="flock-overview-heading"><h2>A little care.<br>A healthier bottom line.</h2><span class="flock-period">${closedBatchesWithData.length} closed batches · all time</span></div>
-          <div class="flock-eggs" aria-label="Closed batch financial performance">
-            <div class="flock-egg egg-sales"><span>Sales</span><strong>${formatPeso(closedRevenue)}</strong></div>
-            <div class="flock-egg egg-cost"><span>Costs</span><strong>${formatPeso(closedCost)}</strong></div>
-            <div class="flock-egg egg-profit"><span>Net profit</span><strong>${formatPeso(closedProfit)}</strong></div>
-          </div>
-          <div class="flock-overview-bottom"><span><i></i>Every batch tells a story.</span><img class="flock-mascot" src="/images/chicken-mascot.png" alt="ChickPence’s waving chicken mascot" width="90" height="90" /></div>
-        </section>
-        <section id="pnl-calendar-host" class="pnl-calendar-host" aria-label="Profit and loss calendar"><div class="pnl-calendar-body">${renderPnlCalendar(ledger)}</div><div class="pnl-preview" id="pnl-preview" role="tooltip" hidden></div></section>
-      </div>
-      <div class="flock-bottom-grid">
-        <div class="flock-performance-column">
-          <section class="flock-livestock"><div><h2>In the coop</h2><p>${openBatchesData.length} open ${openBatchesData.length===1?'batch':'batches'}</p></div><strong>${heads.toLocaleString()}<span>live birds</span></strong><div class="coop-eggs" aria-hidden="true"><i></i><i></i><i></i></div></section>
-          <section class="card-box dash-chart-card flock-trend"><div class="dash-chart-head"><h2>Profit over time</h2><span class="text-mut">Closed batches</span></div>${allClosedSorted.length ? '<div class="chart-canvas-wrap"><canvas id="dash-line-chart" aria-label="Net profit by closed batch" role="img"></canvas></div>' : emptyChartMsg}<div class="stat-mini-row"><div class="stat-tile-mini"><span class="stat-mini-label">Avg net profit · last 5</span><b class="stat-mini-value">${formatPeso(avgNetProfit)}</b></div><div class="stat-tile-mini"><span class="stat-mini-label">Avg price / kg · last 5</span><b class="stat-mini-value">${formatPeso(avgSellingPricePerKg)}</b></div></div></section>
-        </div>
-        <section class="flock-batches-panel"><div class="flock-panel-heading"><h2>Your growing flocks</h2>${openBatchesData.length>1?`<button class="btn-link" id="btn-toggle-all-dash-batches">${allCollapsed?'Expand all':'Collapse all'}</button>`:''}</div><p class="flock-panel-caption">A daily check-in for your open batches.</p>${openCardsHtml}<button class="flock-view-all" data-action="go-batches">View all batches <span aria-hidden="true">↗</span></button></section>
-      </div>
-      <section class="flock-health"><div class="flock-panel-heading"><h2>Flock health</h2><span class="flock-health-state ${hasActiveWarning?'needs-care':''}">${hasActiveWarning?'Needs attention':'Looking healthy'}</span></div><div class="dash-warning-list">${warningsHtml}</div></section>
-      ${insights ? `<div class="flock-insights">${renderInsightsCard(insights)}</div>` : ''}
-    </section>`;
+/**
+ * @param {object|null} home  Home additions: { greetingHtml, cardsHtml, todoHtml, role }.
+ *                            Staff see the greeting, cards, to-do list and flock health only.
+ */
+export function renderDashboard(openBatchesData, closedBatchesWithData, collapsedBatchIds = new Set(), insights = null, expenses = [], home = null) {
+  const { avgNetProfit, avgSellingPricePerKg, allClosedSorted } = getDashboardChartData(closedBatchesWithData);
+  const today=localToday(),staff=home?.role==='staff',target=home?.targetDays||35;
+  const totalProfit=allClosedSorted.reduce((sum,i)=>sum+i.netProfit,0),totalSales=allClosedSorted.reduce((sum,i)=>sum+calcTotalRevenue(i.sales),0),totalCost=totalSales-totalProfit;
+  const ledger=buildPnlLedger([...openBatchesData,...closedBatchesWithData],expenses),month=pnlForMonth(ledger,today.slice(0,7));
+  const monthDays=[...ledger.days.values()].filter(d=>d.date.startsWith(today.slice(0,7))),lossDays=monthDays.filter(d=>d.net<0).length,profitDays=monthDays.filter(d=>d.net>0).length;
+  const mascot=home?.mascot||flockCompanion(openBatchesData,today);
+  const warningItem=openBatchesData.find(i=>evalMortalityWarning(i.batch,i.mortality).mortalityFlag);
+  const warning=warningItem?evalMortalityWarning(warningItem.batch,warningItem.mortality):null;
+  const displayMascot=warning&&mascot.mood==='alerted'?{...mascot,reason:`${warningItem.batch.batch_name} mortality is ${warning.mortalityRate.toFixed(1)}%, above your ${warning.mortalityThreshold}% limit.`}:mascot;
+  const heads=openBatchesData.reduce((sum,i)=>sum+liveHeadCount(i.batch,i.mortality,i.sales,addDays(today,1)),0);
+  const chips=`<div class="rd-companion-kpis">${kpi('Live birds',heads.toLocaleString(),`${openBatchesData.length} open ${openBatchesData.length===1?'batch':'batches'}`)}${staff?'':`<div class="rd-kpi ${month.net<0?'urgent':'good'}"><span>This month</span><strong title="${formatPeso(month.net/100)}">${moneyCompact(month.net/100,0)}</strong><small>${month.net<0?`${lossDays} loss days`:month.net>0?`${profitDays} profit days`:'Recorded P&L'}</small></div>`}${kpi('Today’s tasks',`${home?.tasks?.done||0} of ${home?.tasks?.total||0}`,'Done','warm')}</div>`;
+  const health=openBatchesData.map(i=>{
+    const m=calcBatchMetrics(i.batch,i.allocations,i.sales,i.mortality,i.feed),warn=evalMortalityWarning(i.batch,i.mortality),age=Math.max(0,daysBetween(i.batch.start_date,today)),over=Math.max(0,age-target);
+    const live=liveHeadCount(i.batch,i.mortality,i.sales,addDays(today,1)),limit=warn.mortalityThreshold,scale=Math.max(Number(limit||0)*2,m.mortalityRate,1),mortalityWidth=Math.min(100,m.mortalityRate/scale*100);
+    return `<article class="home-flock-card"><header><h3><button type="button" class="home-batch-link" data-dashboard-batch="${escapeHtml(i.batch.batch_id)}">${escapeHtml(i.batch.batch_name)}</button></h3>${over?'<span class="rd-pill urgent">Overdue for harvest</span>':''}</header><p class="home-flock-meta">Started ${formatDate(i.batch.start_date,true)} · <b>${live.toLocaleString()}</b> live</p><div class="home-health-metric"><div><span>Age · day <b>${age}</b></span><span>target day ${target}</span></div><div class="home-age-track ${over?'past-target':''}" role="img" aria-label="Day ${age}, target day ${target}"><i style="width:${over?Math.max(0,Math.min(100,target/age*100)):Math.min(100,age/target*100)}%"></i></div>${over?`<small class="text-bad">${over} days past target age</small>`:''}</div><div class="home-health-metric"><div><span>Mortality <b class="${warn.mortalityFlag?'text-bad':''}">${m.mortalityRate.toFixed(1)}%</b></span><span>${limit==null?'No limit set':`limit ${limit}%`}</span></div><div class="rd-meter mortality ${warn.mortalityFlag?'urgent':''}"><i style="width:${mortalityWidth}%"></i>${limit==null?'':`<em style="left:${Math.min(100,Number(limit)/scale*100)}%" title="Mortality limit"></em>`}</div></div>${staff?'':`<dl class="home-flock-money"><div><dt>Cost</dt><dd title="${formatPeso(m.totalCost)}">${moneyCompact(m.totalCost)}</dd></div><div><dt>Sales</dt><dd title="${formatPeso(m.revenue)}">${moneyCompact(m.revenue)}</dd></div><div><dt>Net</dt><dd class="${m.netProfit<0?'text-bad':''}" title="${formatPeso(m.netProfit)}">${moneyCompact(m.netProfit)}</dd></div></dl>`}</article>`;
+  }).join('');
+  const healthPanel=`<section id="home-health" class="rd-panel dashboard-health-panel"><div class="page-head"><div><h2>Flock health</h2><p class="text-mut">${openBatchesData.length} open ${openBatchesData.length===1?'batch':'batches'} · ${heads.toLocaleString()} live birds</p></div><button class="btn-link" type="button" data-action="go-batches">View all batches ↗</button></div><div class="rd-health-grid">${health||'<p class="text-mut">No open batches to monitor yet.</p>'}</div></section>`;
+  return `<section class="flock-dashboard overview-garden dense-overview ${staff?'staff-overview':''}" aria-label="Farm dashboard">
+    <div class="home-hero">${home?.greetingHtml||'<h1>Home</h1>'}${staff?'':'<div class="flock-header-actions"><button type="button" class="flock-primary" data-action="go-batches">Manage batches ↗</button></div>'}</div>
+    <div class="rd-home-top">${renderCompanion(displayMascot,openBatchesData,{staff,financialHtml:chips})}<div class="rd-home-tasks">${staff?home?.taskTrackerHtml||'':''}${home?.todoHtml||''}</div></div>
+    <div class="rd-insights">${home?.cardsHtml||''}</div>
+    ${staff?healthPanel:`<div class="rd-home-lower">${healthPanel}<section id="pnl-calendar-host" class="pnl-calendar-host" aria-label="Profit and loss calendar"><div class="pnl-calendar-body">${renderPnlCalendar(ledger)}</div><div class="pnl-preview" id="pnl-preview" role="tooltip" hidden></div></section></div><section id="home-performance" class="rd-panel dashboard-performance"><div class="page-head"><div><h2>Performance</h2><p class="text-mut">${allClosedSorted.length} closed batches · all time</p></div><button type="button" class="btn-link" data-nav="nav:reports:summaries">Open reports ↗</button></div><div class="rd-kpis performance-kpis">${kpi('Net profit',moneyCompact(totalProfit),'',totalProfit<0?'urgent':'good',formatPeso(totalProfit))}${kpi('Sales',moneyCompact(totalSales),'','warm',formatPeso(totalSales))}${kpi('Costs',moneyCompact(totalCost),'','',formatPeso(totalCost))}${kpi('Avg net profit · last 5',moneyCompact(avgNetProfit),'','',formatPeso(avgNetProfit))}${kpi('Avg price / kg · last 5',formatPeso(avgSellingPricePerKg))}</div><h3>Net profit by batch</h3>${allClosedSorted.length?barChart(allClosedSorted.map(i=>({label:i.batch.batch_name,value:i.netProfit})),{money:true,label:'Closed batch net profit'}):'<p class="text-mut">Your first closed batch will appear here.</p>'}<p class="rd-average">Average, last five: ${formatPeso(avgNetProfit)}</p></section>`}
+  </section>`;
 }
 
 async function renderDashboardCharts(container, closedBatchesWithData, onNavigate) {
@@ -277,6 +199,7 @@ export function attachDashboardListeners(
   closedBatchesData = [],
   expenses = []
 ) {
+  container.querySelectorAll('[data-dashboard-batch]').forEach(b=>b.addEventListener('click',()=>onNavigate('batches',b.dataset.dashboardBatch)));
   attachPnlCalendar(container, [...openBatchesData, ...closedBatchesData], expenses, onNavigate);
   container.querySelectorAll('[data-action="go-batches"]').forEach((btn) => {
     btn.addEventListener('click', () => onNavigate('batches'));

@@ -67,19 +67,12 @@ describe('Minimize / Maximize Batch Toggle', () => {
     expect(html).toContain('id="batch-body-test-batch-1" style="display: none;"');
   });
 
-  it('renders minimize button before batch name in Dashboard Open Batches card', () => {
-    const html = renderDashboard(mockBatchData, [], new Set());
-
-    expect(html).toContain('data-action="toggle-dash-batch-collapse"');
-    expect(html).toContain('data-batch-id="test-batch-1"');
-    expect(html).toContain('title="Minimize"');
-    expect(html).toContain('aria-expanded="true"');
-
-    // Button is positioned before the batch name heading within its own card
-    // (searched from the button's position, since the Dashboard may also
-    // mention the batch name earlier on the page, e.g. in a warnings panel)
-    const buttonPos = html.indexOf('data-action="toggle-dash-batch-collapse"');
-    const namePos = html.indexOf('Batch 2026-07', buttonPos);
-    expect(buttonPos).toBeLessThan(namePos);
+  it('shows flock health and a direct batch action on the redesigned Home', () => {
+    const html=renderDashboard(mockBatchData,[],new Set());
+    expect(html).toContain('id="home-health"');
+    expect(html).toContain('data-dashboard-batch="test-batch-1"');
+    expect(html).toContain('Batch 2026-07');
+    expect(html).toContain('live birds');
+    expect(html).not.toContain('toggle-dash-batch-collapse');
   });
 });

@@ -68,15 +68,15 @@ export function renderHistory(batchesWithFullData, searchQuery = '', statusFilte
             <td>${batch.initial_chick_count.toLocaleString()}</td>
             <td>${statusBadge}</td>
             <td>${profitDisplay}</td>
-            <td>${marginDisplay}</td>
-            <td>${formatPercent(mortalityRate)}</td>
+            <td class="${typeof margin==='number'&&margin<5?'text-bad':''}">${marginDisplay}</td>
+            <td class="${mortalityRate>Number(batch.mortality_threshold_pct||5)?'text-bad':''}">${formatPercent(mortalityRate)}</td>
           </tr>`;
       }).join('')
     : `<tr><td colspan="8" class="text-mut" style="text-align:center;padding:24px;">No batches found matching filter criteria.</td></tr>`;
 
   return `
     <div class="top-bar">
-      <h1>Batch History</h1>
+      <h1>Closed batches</h1>
       ${batchesWithFullData.length ? renderExportButton('history') : ''}
     </div>
 
@@ -84,12 +84,12 @@ export function renderHistory(batchesWithFullData, searchQuery = '', statusFilte
       <input
         id="history-search-input"
         type="text"
-        placeholder="🔍 Search batch name…"
+        placeholder="Search batch name"
         value="${escapeHtml(searchQuery)}"
         style="max-width: 280px;"
       />
       <div class="chips-container">
-        ${chips}
+
       </div>
     </div>
 
@@ -112,6 +112,7 @@ export function renderHistory(batchesWithFullData, searchQuery = '', statusFilte
         </tbody>
       </table>
     </div>
+    ${filteredBatches.length?`<div class="rd-closed-totals text-mut">${filteredBatches.length} closed batches · Total net ${formatPeso(filteredBatches.reduce((sum,item)=>sum+calcBatchMetrics(item.batch,item.allocations,item.sales,item.mortality,item.feed).netProfit,0))} · Average net ${formatPeso(filteredBatches.reduce((sum,item)=>sum+calcBatchMetrics(item.batch,item.allocations,item.sales,item.mortality,item.feed).netProfit,0)/filteredBatches.length)}</div>`:''}
   `;
 }
 

@@ -48,13 +48,14 @@ export const AuthService = {
           currentUser = {
             id: session.user.id,
             email: session.user.email,
+            name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || null,
             isDemo: false
           };
         } else if (saved && (result.offline || isAuthRetryableFetchError(result.error))) {
           // Offline: the login can't be renewed until the server is reachable,
           // but it is still saved on this device. Open the local records;
           // supabase-js renews the login by itself once the server is back.
-          currentUser = { id: saved.id, email: saved.email, isDemo: false, offline: true };
+          currentUser = { id: saved.id, email: saved.email, name: saved.user_metadata?.full_name || saved.user_metadata?.name || null, isDemo: false, offline: true };
         }
       }
     }
@@ -84,6 +85,7 @@ export const AuthService = {
         currentUser = {
           id: data.user.id,
           email: data.user.email,
+          name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || null,
           isDemo: false
         };
         localStorage.removeItem('chickpence_demo_session');

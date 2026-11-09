@@ -1,31 +1,33 @@
-# Login surface brief
+# Login and welcome surface brief
 
-Mode: Operate. Scope: login only (`src/ui/loginView.js`, login rules in `src/style.css`, and `public/images/chicken-mascot.png`). This records shipped behavior, not a new global identity.
+## Authorization and composition
 
-## Intent and composition
+The user explicitly retained the centered Login card and painted vertical-stripe background from the supplied references. The final cream-and-gold palette, locally hosted Poppins and supplied SVG chicken replace the former mustard/sprite treatment. These layouts are local to Login and welcome, while signed-in pages use footprints.
 
-The user requested the reference’s white rounded login card, with a chicken replacing the bear and ChickPence’s color theme preserved. First viewport: wordmark and “Log in to your flock.”; waving chicken and “Hi there!”; credentials and Log in; Instant Demo Mode; Supabase connection; prototype/PWA context.
+Login presents the wordmark, “Log in to your flock.”, a hello chicken with greeting bubble, username/email and password fields, reveal control, Log in action and a brief product footer. Instant Demo Mode appears only in development or when VITE_DEMO_MODE is true. The previous Supabase configuration action is not rendered in the current Login markup, although its listener code remains; do not document it as a visible action.
 
-## Incumbent world comparison
+## Appearance
 
-Existing Poppins, mustard `--acc: #c98a00`, sunny `--acc-2: #e8ad33`, charcoal `--ink: #2a2820`, white `--card`, and warm neutral fills remain the visual authority. The cream login canvas, larger card corners, pill controls, and chicken express that world locally. No PRODUCT.md, DESIGN.md, global sidecar, or global identity rules were introduced.
+The wallpaper is `public/images/companions/login-wallpaper.webp`, cover/center over pale cream. The off-white card uses a warm border, 28px corners and localized warm shadow. Desktop inherits a 410px maximum and 34px/36px/26px padding; at 719px and below it uses a 420px maximum with 28px/24px padding, subject to the viewport. The wordmark retains its 33px/700 local type role. The supplied hello SVG is 240px on desktop and 200px on phones. Warm inset pill fields retain 48px minimum containers, icon labels and the reveal control; primary action uses the new gold and dark text. Shared dark-gold outlines identify focus.
 
-## Actual appearance
+## Authentication and feedback
 
-Inherited Poppins/system stack and body 14px/1.45. Wordmark 33px/700, line-height 1.2, tracking -0.035em; subtitle 15px; fields/actions 13px; supporting copy 10–11px. Centered column with minimum 100svh, padding 48px 20px 28px, cream background #f5f1e8. White card max-width 410px, radius 30px, padding 34px 36px 26px, shadow `0 18px 38px -18px rgb(69 51 17 / 30%), 0 5px 14px rgb(69 51 17 / 5%)`. Transparent mascot renders 200×200px inside a 220px scene.
+AuthService login remains the credential handler. Username is required; password is required when Supabase is configured. Password reveal updates input type, accessible label, pressed state and eye icon. Focusing password swaps the image to `chicken-sleepy.svg` with “I’m not peeking!”; blur restores hello and “Hi there!”. This is a friendly privacy cue, not a security mechanism.
 
-Fields: #f3f1ed fill, pill radius, minimum height 48px; form gap 12px. Primary button: incumbent mustard, #241b06 text, hover #d79911. Demo: #fff9eb fill, #e7d6ad border, hover #fff0cc. Field focus: #a77300 border/#fffdf8 fill; button focus: 2px #946400 outline offset 3px. Actions minimum height 47px; password reveal 40×40px; cloud action minimum height 44px.
+Conditional Demo uses loginDemo. Pending authentication disables available primary/demo actions, updates their label and marks the form busy. Failures use role=alert and restore controls. Fields retain accessible labels and autocomplete. Existing saving and sync behavior are unchanged.
 
-At ≤480px: wrapper padding 24px 18px, card padding 30px 25px 23px/radius 26px, wordmark 31px, inputs 16px. Button and field state transitions use 160ms; reduced motion removes these transitions.
+## Welcome
 
-## Behavior and accessibility
+The personalized post-login welcome repeats the striped canvas and off-white card, greeting by available full name/name/email-derived name, with “there” as fallback. Chips show alert/task/question counts; the hello chicken is a button with a short greeting response. The entry button or scrolling leads into the signed-in dashboard, with focus transferred on activation. Navigation clears the welcome state.
 
-Credential form retains AuthService login; username required, password required when cloud is configured. Password reveal updates input type, accessible label, pressed state, and eye icon. Demo calls loginDemo without credentials. Cloud action opens existing Supabase configuration and refreshes login after configuration. Pending authentication disables submit/demo/cloud, updates the active label, and sets aria-busy; failures display a role=alert and restore controls. Fields retain screen-reader labels and autocomplete. Decorative SVGs/greeting are hidden from assistive technology; chicken has descriptive alt text.
+The character is 240px; the card uses 28px corners and phone padding tightens to 28px/20px. Reduced motion keeps welcome opaque and uses immediate scroll, and disables CSS greeting/arrow animation. Supplied SVGs contain their own reduced-motion media overrides; runtime preference behavior was not independently tested.
 
-## Provenance and verification
+## Assets
 
-Original transparent generated chicken; exact prompt and source recorded in `public/images/chicken-mascot.provenance.json`. Implementing agent reports production build and 222 tests passed; browser verified reveal, demo login/logout, cloud dialog, and no overflow at 1440×900, 390×844, and 826×866. Evidence: `.impeccable/review/desktop.png`, `mobile.png`, `user-826.png`. Independent finish reviewer returned ship with no material fixes. These are session results, not new checks by the documenter.
+The new SVG art was supplied by the user and copied unchanged; Poppins Latin WOFF2 came from the supplied HTML bundle with `public/fonts/OFL.txt`. Existing raster wallpaper and prior companion provenance remain in `public/images/companions/provenance.json`; they do not establish provenance for the separately supplied SVGs. Original mascot assets remain untouched.
 
-## Boundaries
+## Evidence and boundaries
 
-Keep the requested white card, chicken, and incumbent warm palette together on this surface. Local composition and measurements are not application-wide rules. No defects or pre-existing drift were canonized or repaired; global documentation is outside scope.
+Source authority is `src/redesign.css` together with the current UI components; older `src/style.css` rules are overridden where the redesign applies. The independent scoped finish review in `.impeccable/review/finish-review.md` returned SHIP for five fixes: Users wrapping/actions, age wording/bar semantics, Home questions/Performance, Team completion/missed counts, and Settings logo/default mortality previews. It was a screenshot/source review, not independent execution of save, approval, export, sync, keyboard or calculation workflows. Captures are `.impeccable/review/{desktop,mobile}.png` and `../outputs/redesign-*.png`.
+
+The implementing agent previously reported 289 passing tests across 21 files, a passing production build and diff check. Those results predate the compact Home/Concerns follow-up; final validation is reported separately by the implementing agent. The documenter did not rerun those checks. Detector engine 0.1.5 was unavailable; no detector result is claimed. No dependencies or push were added. Device-only previews are not server-enforced account administration. See `docs/redesign-implementation.md` for the full connected/preview boundary table. This documentation pass changes no source, tests, assets, PRODUCT.md or git state.
